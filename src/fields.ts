@@ -85,13 +85,17 @@ export class FieldFactory {
   }
 
   private async message(): Promise<string> {
+    const { sha } = context;
+    const shortSha = sha.slice(0, 8);
     const resp = await this.getCommit(this.octokit);
-
-    const value = `<${resp.data.html_url}|${resp.data.commit.message
+    const link = resp.data.html_url;
+    const message = resp.data.commit.message
       .split('\n')[0]
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')}>`;
+      .replace(/>/g, '&gt;');
+
+    const value = `<${link}|${shortSha} - ${message}>`;
     process.env.AS_MESSAGE = value;
     return value;
   }

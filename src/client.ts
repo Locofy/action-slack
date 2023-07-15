@@ -108,6 +108,8 @@ export class Client {
 
   async send(payload: string | IncomingWebhookSendArguments) {
     core.debug(JSON.stringify(context, null, 2));
+    core.debug('payload');
+    core.debug(payload as string);
     await this.webhook.send(payload);
     core.debug('send message');
   }
@@ -167,6 +169,21 @@ export class Client {
     return text === '' ? defaultText : text;
   }
 
+  private getAuthor() {
+    const pusherName = context.payload?.pusher?.name;
+    const githubAuthor = pusherName;
+    if (githubAuthor) {
+      const author_name = githubAuthor;
+      const author_link = `https://github.com/${author_name}`;
+      const author_icon = `https://github.com/${author_name}.png?size=32`;
+      return {
+        author_link,
+        author_name,
+        author_icon,
+      };
+    }
+  }
+
   private async payloadTemplate() {
     const text = '';
     const { username, icon_emoji, icon_url, channel } = this.with;
@@ -181,6 +198,7 @@ export class Client {
         {
           color: '',
           author_name: this.with.author_name,
+          ...(this.getAuthor() || {}),
           fields: await this.fieldFactory.attachments(),
         },
       ],

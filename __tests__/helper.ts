@@ -111,7 +111,7 @@ export const message = (): Field => {
   return {
     short: true,
     title: 'message',
-    value: `<${obj.html_url}|[#19] support for multiple user mentions &amp; escaping &lt;, &gt;>`,
+    value: `<${obj.html_url}|b24f03a3 - [#19] support for multiple user mentions &amp; escaping &lt;, &gt;>`,
   };
 };
 
