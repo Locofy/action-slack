@@ -1,0 +1,9 @@
+.frameChild {
+  position: absolute;
+  top: 147px;
+  left: 254px;
+  width: 33px;
+  height: 33px;
+  overflow: hidden;
+  object-fit: cover;
+}
